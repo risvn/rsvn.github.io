@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Self Hosting | rsvn.blog</title>
+<meta name="keywords" content="self-hosting, linux, servers, daemon, programming">
+<meta name="description" content="
+“If you need a machine and don’t buy it, then you will ultimately find that you have paid for it and don’t have it.”
+— Henry Ford, via Clayton Christensen
+
+These days I’m working on an HTTP server in C using WebSockets, just to get a taste of how things work under the hood.
+The only functionality of the server is to listen for incoming requests and send HTML and media files.">
+<meta name="author" content="">
+<link rel="canonical" href="https://risvn.github.io/blog/posts/selfhost/">
+<link crossorigin="anonymous" href="/blog/assets/css/stylesheet.343cc480b9ffc8f04ccbe5e968ad674880cab773ec19905e93033065c1e7a804.css" integrity="sha256-NDzEgLn/yPBMy&#43;XpaK1nSIDKt3PsGZBekwMwZcHnqAQ=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://risvn.github.io/blog/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://risvn.github.io/blog/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://risvn.github.io/blog/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://risvn.github.io/blog/apple-touch-icon.png">
+<link rel="mask-icon" href="https://risvn.github.io/blog/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://risvn.github.io/blog/posts/selfhost/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            .list::-webkit-scrollbar-thumb {
+                border-color: var(--code-bg);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const saved = localStorage.getItem("theme");
+  if (saved === "retro") {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https:\/\/risvn.github.io\/blog\/css\/retro.min.css";
+    link.id = "retro-style";
+    document.head.appendChild(link);
+  }
+});
+</script>
+
+<meta property="og:url" content="https://risvn.github.io/blog/posts/selfhost/">
+  <meta property="og:site_name" content="rsvn.blog">
+  <meta property="og:title" content="Self Hosting">
+  <meta property="og:description" content=" “If you need a machine and don’t buy it, then you will ultimately find that you have paid for it and don’t have it.”
+— Henry Ford, via Clayton Christensen
+These days I’m working on an HTTP server in C using WebSockets, just to get a taste of how things work under the hood.
+The only functionality of the server is to listen for incoming requests and send HTML and media files.">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-11-30T18:07:15+05:30">
+    <meta property="article:modified_time" content="2025-11-30T18:07:15+05:30">
+    <meta property="article:tag" content="Self-Hosting">
+    <meta property="article:tag" content="Linux">
+    <meta property="article:tag" content="Servers">
+    <meta property="article:tag" content="Daemon">
+    <meta property="article:tag" content="Programming">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Self Hosting">
+<meta name="twitter:description" content="
+“If you need a machine and don’t buy it, then you will ultimately find that you have paid for it and don’t have it.”
+— Henry Ford, via Clayton Christensen
+
+These days I’m working on an HTTP server in C using WebSockets, just to get a taste of how things work under the hood.
+The only functionality of the server is to listen for incoming requests and send HTML and media files.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://risvn.github.io/blog/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Self Hosting",
+      "item": "https://risvn.github.io/blog/posts/selfhost/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Self Hosting",
+  "name": "Self Hosting",
+  "description": " “If you need a machine and don’t buy it, then you will ultimately find that you have paid for it and don’t have it.”\n— Henry Ford, via Clayton Christensen\nThese days I’m working on an HTTP server in C using WebSockets, just to get a taste of how things work under the hood.\nThe only functionality of the server is to listen for incoming requests and send HTML and media files.\n",
+  "keywords": [
+    "self-hosting", "linux", "servers", "daemon", "programming"
+  ],
+  "articleBody": " “If you need a machine and don’t buy it, then you will ultimately find that you have paid for it and don’t have it.”\n— Henry Ford, via Clayton Christensen\nThese days I’m working on an HTTP server in C using WebSockets, just to get a taste of how things work under the hood.\nThe only functionality of the server is to listen for incoming requests and send HTML and media files.\nCloud services have become extremely popular due to accessibility, scalability, and the fact that real hardware is abstracted away from developers.\nI wanted to see for myself what it’s like to self-host on a bare-metal server — even though it’s a small project.\nAt this point, my servers are sitting idle anyway, so why not?\nNote I over simplified all the steps which it took me hours to figure it out! but once you get it that it ;) If you are planning to self-host your personal projects, the steps are pretty much the same for any vps or physical machines all you need is a host.\n1.Get a Machine Cheapest way to get started is buy a rasperry pi with minimum 4gb ram and flash a light-wegiht linux destro(headless) where you opereate completley from cli Perfect for personal or hobby projects Great first step into homelabbing VPS (Platform as a Service) You can rent a VPS from popular providers such as:\nLinode AWS EC2 or similar cloud services DigitalOcean Hostinger Vultr For Front-End Developers You probably don’t want to manage your own server.\nIn that case, serverless platforms handle deployment automatically.\nThese are the easiest options for frontend-focused developers:\nVercel Netlify AWS Amplify Though most of these services are basically just wrappers around AWS, offering a nicer UI and developer experience — while charging more for the convenience.\n2.connecting to the internet I had no idea where to begin, so I researched for a couple of days about self-hosting.\nHere’s what I concluded:\nHosting typically involves port forwarding You need a static IP Most telecom providers don’t give static IPv4 addresses for home consumers Because they use CGNAT (Carrier-Grade NAT) Even I didn’t know what that actually meant .\nThen I discovered web tunnels, where you forward all incoming traffic to a server running on your localhost.\nNote: Tunnels are okay for demos.\nNot recommended for production if you expect a significant amount of traffic.\nso i created a tunnel service on cloudflare (free of cost btw) and run the cloudflared(dameon) basically a way of communication between my machine to the cloudflare servers that gonna forward the request running on specific port on my local machine Everything worked fine, and now I just needed a process that always runs on boot without user interaction — a daemon process in Linux.\nDaemon “A daemon is a background process that handles requests for services like file transfers, printing, or managing network connections — kind of like a waiter at a restaurant, serving requests without you ever noticing.\nThe word itself comes from ancient Greek, meaning an attendant spirit.\nInvisible, but always there.\nMy daemon — it’s always there too. Watching. Guiding. Sometimes I think about how much like them I am… always running in the background.”\n— Elliot, Mr. Robot\n3.Creating Your Own Daemon I SSH’d into my remote machine (btw, SSH also has its own daemon called sshd, which listens for incoming connections. Here’s what I learned about making a daemon service of your own:\nCreate a new service file sudo vim /etc/systemd/system/.service Configure it Set: executable path working directory restart policy\nFrom this point, managing your custom service is just like any other daemon:\nsudo systemctl start sudo systemctl status sudo systemctl enable If you run into problems:\njournalctl itself is powered by its own daemon that logs system events.\nsudo journalctl -xe 4.Buy a Domain well with out domain people cant find you on the internet buy a domain which i strongly recommend if you are in to web programming and single domain can be used to host multiple web application and static site anyway and point the dns to the tunnel on cloud flared admin zero trust panel\nNOTE: This more complicated than i mentioned above admin pannel is over-whelming for first time\n5.share every where It’s not that hard — and it is truly rewarding to spin up your own server. Results were satisfying.And its not less than a wonder to realize how internet works\nYou can check my project(self-hosted) : https://album.wannabex.sbs\nTopics I’m Exploring 1. Threads \u0026 Mutexes\n2. Load Balancers\n3. Containerization\n4. Socket Programming\n5. os and kernel\n",
+  "wordCount" : "770",
+  "inLanguage": "en",
+  "datePublished": "2025-11-30T18:07:15+05:30",
+  "dateModified": "2025-11-30T18:07:15+05:30",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://risvn.github.io/blog/posts/selfhost/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "rsvn.blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://risvn.github.io/blog/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://risvn.github.io/blog/" accesskey="h" title="rsvn.blog (Alt + H)">rsvn.blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://risvn.github.io/blog/archives/" title="Archives">
+                    <span>Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://risvn.github.io/blog/categories/" title="Categories">
+                    <span>Categories</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://risvn.github.io/blog/">Home</a>&nbsp;»&nbsp;<a href="https://risvn.github.io/blog/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Self Hosting
+    </h1>
+    <div class="post-meta"><span title='2025-11-30 18:07:15 +0530 IST'>November 30, 2025</span>&nbsp;·&nbsp;<span>4 min</span>
+
+</div>
+  </header> 
+  <div class="post-content"><blockquote>
+<p><em>“If you need a machine and don’t buy it, then you will ultimately find that you have paid for it and don’t have it.”</em><br>
+— <strong>Henry Ford</strong>, via Clayton Christensen</p>
+</blockquote>
+<p>These days I’m working on an <strong>HTTP server in C using WebSockets</strong>, just to get a taste of how things work under the hood.<br>
+The only functionality of the server is to listen for incoming requests and send HTML and media files.</p>
+<p>Cloud services have become extremely popular due to accessibility, scalability, and the fact that real hardware is abstracted away from developers.<br>
+I wanted to see for myself what it’s like to <strong>self-host on a bare-metal server</strong> — even though it’s a small project.</p>
+<p>At this point, my servers are sitting idle anyway, so <strong>why not?</strong></p>
+<hr>
+<h3 id="note">Note<a hidden class="anchor" aria-hidden="true" href="#note">#</a></h3>
+<blockquote>
+<p>I over <strong>simplified</strong> all the steps which it took me hours to figure it out! but once you get it that it ;)
+If you are planning to self-host your personal projects, the steps are pretty much the same for any vps or physical machines
+<strong>all you need is a host.</strong></p>
+</blockquote>
+<h3 id="1get-a-machine">1.Get a Machine<a hidden class="anchor" aria-hidden="true" href="#1get-a-machine">#</a></h3>
+<ul>
+<li>Cheapest way to get started is buy a rasperry pi with minimum 4gb ram and flash a <strong>light-wegiht</strong> linux destro(headless) where you opereate completley from cli</li>
+<li>Perfect for personal or hobby projects</li>
+<li>Great first step into homelabbing</li>
+</ul>
+<p><img alt="Alt text" loading="lazy" src="https://raw.githubusercontent.com/risvn/blog/refs/heads/main/media/pi.jpg" title="yes,it is a server now"></p>
+<h3 id="vps-platform-as-a-service"><strong>VPS (Platform as a Service)</strong><a hidden class="anchor" aria-hidden="true" href="#vps-platform-as-a-service">#</a></h3>
+<p>You can rent a VPS from popular providers such as:</p>
+<ul>
+<li>Linode</li>
+<li>AWS EC2 or similar cloud services</li>
+<li>DigitalOcean</li>
+<li>Hostinger</li>
+<li>Vultr</li>
+</ul>
+<hr>
+<h3 id="for-front-end-developers">For Front-End Developers<a hidden class="anchor" aria-hidden="true" href="#for-front-end-developers">#</a></h3>
+<p>You probably don’t want to manage your own server.<br>
+In that case, serverless platforms handle deployment automatically.</p>
+<p>These are the easiest options for frontend-focused developers:</p>
+<ul>
+<li><strong>Vercel</strong></li>
+<li><strong>Netlify</strong></li>
+<li><strong>AWS Amplify</strong></li>
+</ul>
+<blockquote>
+<p>Though most of these services are basically just wrappers around AWS, offering a nicer UI and developer experience — while charging more for the convenience.</p>
+</blockquote>
+<hr>
+<h3 id="2connecting-to-the-internet">2.connecting to the internet<a hidden class="anchor" aria-hidden="true" href="#2connecting-to-the-internet">#</a></h3>
+<p>I had no idea where to begin, so I researched for a couple of days about self-hosting.<br>
+Here’s what I concluded:</p>
+<ul>
+<li>Hosting typically involves <strong>port forwarding</strong></li>
+<li>You need a <strong>static IP</strong></li>
+<li>Most telecom providers don’t give static IPv4 addresses for home consumers</li>
+<li>Because they use <strong>CGNAT</strong> (Carrier-Grade NAT)</li>
+</ul>
+<p>Even I didn’t know what that actually meant .</p>
+<p>Then I discovered <strong>web tunnels</strong>, where you forward all incoming traffic to a server running on your localhost.</p>
+<blockquote>
+<p><strong>Note:</strong> Tunnels are okay for demos.<br>
+Not recommended for production if you expect a significant amount of traffic.</p>
+</blockquote>
+<p>so i created a tunnel service on <strong>cloudflare</strong> (free of cost btw) and run the cloudflared(dameon)
+<strong>basically</strong> a way of communication between my machine to the cloudflare servers that gonna forward the request running on specific port on my local machine
+Everything <strong>worked fine</strong>, and now I just needed a process that always runs on boot without user interaction — a <strong>daemon process</strong> in Linux.</p>
+<hr>
+<h3 id="daemon">Daemon<a hidden class="anchor" aria-hidden="true" href="#daemon">#</a></h3>
+<p><img alt="Alt text" loading="lazy" src="https://raw.githubusercontent.com/risvn/blog/refs/heads/main/media/daemon.jpg" title="always running process in the background"></p>
+<blockquote>
+<p>“A daemon is a background process that handles requests for services like file transfers, printing, or managing network connections — kind of like a waiter at a restaurant, serving requests without you ever noticing.<br>
+The word itself comes from ancient Greek, meaning an attendant spirit.<br>
+Invisible, but always there.<br>
+My daemon — it’s always there too. Watching. Guiding. Sometimes I think about how much like them I am… always running in the background.”<br>
+— <strong>Elliot, Mr. Robot</strong></p>
+</blockquote>
+<hr>
+<h3 id="3creating-your-own-daemon">3.Creating Your Own Daemon<a hidden class="anchor" aria-hidden="true" href="#3creating-your-own-daemon">#</a></h3>
+<p>I SSH’d into my remote machine (btw, SSH also has its own daemon called <strong>sshd</strong>, which listens for incoming connections.
+Here’s what I learned about making a daemon service of your own:</p>
+<h3 id="create-a-new-service-file">Create a new service file<a hidden class="anchor" aria-hidden="true" href="#create-a-new-service-file">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo vim /etc/systemd/system/&lt;name&gt;.service
+</span></span></code></pre></div><ol start="2">
+<li>Configure it</li>
+</ol>
+<p>Set:
+executable path
+working directory
+restart policy</p>
+<p>From this point, managing your custom service is just like any other daemon:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl start &lt;service&gt;
+</span></span><span style="display:flex;"><span>sudo systemctl status &lt;service&gt;
+</span></span><span style="display:flex;"><span>sudo systemctl enable &lt;service&gt;
+</span></span></code></pre></div><p>If you run into problems:</p>
+<p>journalctl itself is powered by its own daemon that logs system events.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo journalctl -xe
+</span></span></code></pre></div><h3 id="4buy-a-domain">4.Buy a Domain<a hidden class="anchor" aria-hidden="true" href="#4buy-a-domain">#</a></h3>
+<p>well with out domain people cant find you on the internet buy a domain which i <strong>strongly recommend</strong> if you are in to web programming
+and single domain can be used to host multiple web application and  static site anyway
+and point the dns to the tunnel on cloud flared <strong>admin</strong> zero trust panel</p>
+<blockquote>
+<p>NOTE: This more complicated than i mentioned above
+admin pannel is over-whelming for first time</p>
+</blockquote>
+<h3 id="5share-every-where">5.share every where<a hidden class="anchor" aria-hidden="true" href="#5share-every-where">#</a></h3>
+<p>It’s not that hard — and it is truly rewarding to spin up your own server.
+Results were satisfying.And its not less than a wonder to realize how internet works</p>
+<blockquote>
+<p>You can check my project(self-hosted) : <a href="https://album.wannabex.sbs">https://album.wannabex.sbs</a></p>
+</blockquote>
+<h3 id="topics-im-exploring">Topics I’m Exploring<a hidden class="anchor" aria-hidden="true" href="#topics-im-exploring">#</a></h3>
+<p><strong>1. Threads &amp; Mutexes</strong><br>
+<strong>2. Load Balancers</strong><br>
+<strong>3. Containerization</strong><br>
+<strong>4. Socket Programming</strong><br>
+<strong>5. os and kernel</strong></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://risvn.github.io/blog/tags/self-hosting/">Self-Hosting</a></li>
+      <li><a href="https://risvn.github.io/blog/tags/linux/">Linux</a></li>
+      <li><a href="https://risvn.github.io/blog/tags/servers/">Servers</a></li>
+      <li><a href="https://risvn.github.io/blog/tags/daemon/">Daemon</a></li>
+      <li><a href="https://risvn.github.io/blog/tags/programming/">Programming</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="https://risvn.github.io/blog/">rsvn.blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a><script>
+function toggleRetro() {
+  const existing = document.getElementById("retro-style");
+  if (existing) {
+    existing.remove();
+    localStorage.removeItem("theme");
+  } else {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https:\/\/risvn.github.io\/blog\/css\/retro.min.css";
+    link.id = "retro-style";
+    document.head.appendChild(link);
+    localStorage.setItem("theme", "retro");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.createElement("button");
+  btn.textContent = " Toggle Retro Mode";
+  btn.style.position = "fixed";
+  btn.style.bottom = "20px";
+  btn.style.right = "20px";
+  btn.style.zIndex = "9999";
+  btn.onclick = toggleRetro;
+  document.body.appendChild(btn);
+});
+</script>
+
+
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

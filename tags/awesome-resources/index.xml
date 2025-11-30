@@ -1,56 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Awesome-Resources on rsvn&#39;s blog</title>
+    <title>Awesome-Resources on rsvn.blog</title>
     <link>https://risvn.github.io/blog/tags/awesome-resources/</link>
-    <description>Recent content in Awesome-Resources on rsvn&#39;s blog</description>
+    <description>Recent content in Awesome-Resources on rsvn.blog</description>
     <generator>Hugo -- 0.152.2</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 01 Nov 2025 18:07:15 +0530</lastBuildDate>
     <atom:link href="https://risvn.github.io/blog/tags/awesome-resources/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>10x developer</title>
-      <link>https://risvn.github.io/blog/posts/resources/</link>
+      <link>https://risvn.github.io/blog/posts/10xdev/</link>
       <pubDate>Sat, 01 Nov 2025 18:07:15 +0530</pubDate>
-      <guid>https://risvn.github.io/blog/posts/resources/</guid>
-      <description>&lt;p&gt;These are the resources gathered from the internet that i find valube for learning and sorted in categories (I think it would help others as well)&lt;/p&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;awesome-resources&#34;&gt;Awesome resources&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/prakhar1989/awesome-courses&#34;&gt;cs courses&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/ericnormand/awesome-functional-programming-1&#34;&gt;functional programming&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/public-apis/public-apis&#34;&gt;public api&amp;rsquo;s&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/lnishan/awesome-competitive-programming&#34;&gt;competitive programming&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/codecrafters-io/build-your-own-x&#34;&gt;build your own x&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/TheAlgorithms&#34;&gt;algorithms&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;essential-tools-that-makes-you-10x-dev&#34;&gt;Essential tools that makes you 10x dev&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://linuxcommand.org/tlcl.php&#34;&gt;the linux cli&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=a6Q8Na575qc&amp;amp;list=PLyzOVJj3bHQuloKGG59rS43e29ro7I57J&amp;amp;index=4&#34;&gt;vim&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=2sjqTHE0zok&amp;amp;list=PLyzOVJj3bHQuloKGG59rS43e29ro7I57J&amp;amp;index=6&#34;&gt;git&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://thoughtbot.com/blog/a-tmux-crash-course&#34;&gt;tmux&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=svG6OPyKsrw&#34;&gt;gdb&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://strace.io/&#34;&gt;strace&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://perfwiki.github.io/main/&#34;&gt;perf&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://catonmat.net/cookbooks/curl&#34;&gt;curl&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docker-curriculum.com/&#34;&gt;Docker&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;blogs-that-are-worth-reading&#34;&gt;blogs that are worth reading&lt;/h3&gt;
-&lt;h4 id=&#34;web&#34;&gt;web&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.theodinproject.com/paths&#34;&gt;odin project&lt;/a&gt; - js full stack&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.fullstackpython.com/table-of-contents.html&#34;&gt;fullstack python&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.fullstackpython.com/table-of-contents.html&#34;&gt;building own frame work&lt;/a&gt; in python&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://defn.io/2018/02/25/web-app-from-scratch-01/&#34;&gt;web application from scratch&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;systems&#34;&gt;systems&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://mohitmishra786.github.io/exploring-os/src/&#34;&gt;Exploring os&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://kernelnewbies.org/&#34;&gt;kernel-newbeis&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://kernelnewbies.org/&#34;&gt;os dev wiki&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://littleosbook.github.io/&#34;&gt;little book on os&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
+      <guid>https://risvn.github.io/blog/posts/10xdev/</guid>
+      <description>These are the resources gathered from the internet that I find valuable for learning and sorted into categories.</description>
     </item>
   </channel>
 </rss>
