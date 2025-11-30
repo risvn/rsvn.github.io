@@ -157,8 +157,8 @@ At this point, my servers are sitting idle anyway, so why not?">
   "keywords": [
     "self-hosting", "linux"
   ],
-  "articleBody": " If you need a machine and don’t buy it, then you will ultimately find that you have paid for it and don’t have it.\n— Henry Ford via Clayton Christensen\nThese days I’m working on an HTTP server in C using WebSockets, just to get a taste of how things work under the hood.\nThe only functionality of the server is to listen and send HTML and media files.\nNow a days cloud is more popularized for its accessibility, scalability, and the fact that real hardware is abstracted away from developers.\nI wanted to see for myself what it’s like to self-host on a bare-metal server — even though it’s a small project.\nAt this point, my servers are sitting idle anyway, so why not?\nDont judge me on this\nThe thing is, I had no idea where to begin, so I researched for a couple of days about how to self-host.\nHere’s what I concluded:\nTypically, the process involves port forwarding and requires a static IP.\nGuess what? Most telecom services don’t provide static IPv4 for home consumers since they’re behind CGNAT.\nEven I didn’t know what that actually mean.\nThen I came to know about web tunnels, where you can forward all incoming requests to a server running on your localhost.\nEverything worked fine, and now I just had to create a process that always runs in the background on boot — without any user intervention.\nThis is what’s called a daemon process in Linux.\n“A daemon is a background process that handles requests for services like file transfers, printing, or managing network connections — kind of like a waiter at a restaurant, serving requests without you ever noticing.\nThe word itself comes from the ancient Greek meaning an attendant spirit.\nInvisible, but always there.\nMy daemon — it’s always there too. Watching. Guiding. Sometimes I think about how much like them I am… always running in the background.”\n— Elliot, Mr. Robot\nCreating your own daemon So I SSH’d into my remote machine (btw, SSH also has its own daemon process called sshd, which always listens for incoming connections).\nHere’s what I learned about making a daemon service of your own:\nCreate a new service file:\nsudo vim /etc/systemd/system/.service Configure it with your executable path, working directory, and restart policy. from this point managing the service process are same as any other daemon process\n1.sudo systemctl start 2.sudo systemctl status 3.sudo systemctl enable if you got any problem activating service.\ntry\nsudo journalctl -xe which is also a daemon process which keeps logs of the other daemons.\nDo some research its not that hard it is truly rewarding spinning up own servers\nthe result are satisfying you can check out: https://album.wannabex.sbs\n",
-  "wordCount" : "459",
+  "articleBody": " If you need a machine and don’t buy it, then you will ultimately find that you have paid for it and don’t have it.\n— Henry Ford via Clayton Christensen\nThese days I’m working on an HTTP server in C using WebSockets, just to get a taste of how things work under the hood.\nThe only functionality of the server is to listen and send HTML and media files.\nNow a days cloud is more popularized for its accessibility, scalability, and the fact that real hardware is abstracted away from developers.\nI wanted to see for myself what it’s like to self-host on a bare-metal server — even though it’s a small project.\nAt this point, my servers are sitting idle anyway, so why not?\nNote If you are planning to self-host your personal projects, the steps are pretty much the same — all you need is a host.\nWhere to start Get the host\n1. Raspberry Pi Cheapest way to get started Perfect for personal or hobby projects Rasberry pi as a host\n2. VPS (Platform as a Service) You can rent a VPS from popular providers such as:\nLinode aws Ec2 or similar cloud services DigitalOcean Hostinger Vultr FOR Front-End Developers You probably don’t want to manage your own server. In that case, you can go with serverless platforms, which handle deployment automatically.\nThese are the easiest options for frontend-focused developers. Popular options:\nVercel Netlify AWS Amplify Though most of these services are basically just wrappers around AWS, offering a nicer UI and developer experience while charging more for the convenience.\nThe thing is, I had no idea where to begin, so I researched for a couple of days about how to self-host.\nHere’s what I concluded:\nTypically, the process involves port forwarding and requires a static IP.\nGuess what? Most telecom services don’t provide static IPv4 for home consumers since they’re behind CGNAT.\nEven I didn’t know what that actually mean.\nThen I came to know about web tunnels, where you can forward all incoming requests to a server running on your localhost.\nNOTE:Tunnels are okay for deploying demo not recommended for the production in case you have consider amount of traffic on your site\nEverything worked fine, and now I just had to create a process that always runs in the background on boot — without any user intervention.\nThis is what’s called a daemon process in Linux.\n“A daemon is a background process that handles requests for services like file transfers, printing, or managing network connections — kind of like a waiter at a restaurant, serving requests without you ever noticing.\nThe word itself comes from the ancient Greek meaning an attendant spirit.\nInvisible, but always there.\nMy daemon — it’s always there too. Watching. Guiding. Sometimes I think about how much like them I am… always running in the background.”\n— Elliot, Mr. Robot\nCreating your own daemon So I SSH’d into my remote machine (btw, SSH also has its own daemon process called sshd, which always listens for incoming connections).\nHere’s what I learned about making a daemon service of your own:\nCreate a new service file:\nsudo vim /etc/systemd/system/.service Configure it with your executable path, working directory, and restart policy. from this point managing the service process are same as any other daemon process\n1.sudo systemctl start 2.sudo systemctl status 3.sudo systemctl enable if you got any problem activating service.\ntry\nsudo journalctl -xe which is also a daemon process which keeps logs of the other daemons.\nits not that hard it is truly rewarding spinning up own servers\nthe result are satisfying you can check out: https://album.wannabex.sbs\nTopics I’m Exploring 1. Threads \u0026 Mutexes 2. Load Balancers 3. Containerization 4. Socket Programming ",
+  "wordCount" : "627",
   "inLanguage": "en",
   "datePublished": "2025-11-07T17:35:23+05:30",
   "dateModified": "2025-11-07T17:35:23+05:30",
@@ -242,14 +242,47 @@ The only functionality of the server is to listen and send HTML and media files.
 <p>Now a days <strong>cloud</strong> is more popularized for its <strong>accessibility</strong>, <strong>scalability</strong>, and the fact that <strong>real hardware is abstracted away</strong> from developers.<br>
 I wanted to see for myself what it’s like to <strong>self-host on a bare-metal server</strong> — even though it’s a small project.<br>
 At this point, my servers are sitting idle anyway, so why not?</p>
+<h2 id="note">Note<a hidden class="anchor" aria-hidden="true" href="#note">#</a></h2>
+<p>If you are planning to <strong>self-host your personal projects</strong>, the steps are pretty much the same — all you need is a <strong>host</strong>.</p>
+<h3 id="where-to-start">Where to start<a hidden class="anchor" aria-hidden="true" href="#where-to-start">#</a></h3>
+<p>Get the host</p>
+<h4 id="1-raspberry-pi">1. Raspberry Pi<a hidden class="anchor" aria-hidden="true" href="#1-raspberry-pi">#</a></h4>
+<ul>
+<li>Cheapest way to get started</li>
+<li>Perfect for personal or hobby projects</li>
+</ul>
 <p><img alt="server" loading="lazy" src="https://raw.githubusercontent.com/risvn/blog/refs/heads/main/media/server.jpg">
-Dont <strong>judge me</strong> on this</p>
+<img alt="daemon" loading="lazy" src="https://raw.githubusercontent.com/risvn/blog/refs/heads/main/media/pi.jpg">
+Rasberry pi as a host</p>
+<h4 id="2-vps-platform-as-a-service">2. VPS (Platform as a Service)<a hidden class="anchor" aria-hidden="true" href="#2-vps-platform-as-a-service">#</a></h4>
+<p>You can rent a VPS from popular providers such as:</p>
+<ul>
+<li><strong>Linode</strong></li>
+<li><strong>aws Ec2 or similar cloud services</strong></li>
+<li><strong>DigitalOcean</strong></li>
+<li><strong>Hostinger</strong></li>
+<li><strong>Vultr</strong></li>
+</ul>
+<hr>
+<h3 id="for-front-end-developers">FOR Front-End Developers<a hidden class="anchor" aria-hidden="true" href="#for-front-end-developers">#</a></h3>
+<p>You probably don’t want to manage your own server.
+In that case, you can go with <strong>serverless platforms</strong>, which handle deployment automatically.</p>
+<p>These are the easiest options for frontend-focused developers.
+Popular options:</p>
+<ul>
+<li><strong>Vercel</strong></li>
+<li><strong>Netlify</strong></li>
+<li><strong>AWS Amplify</strong></li>
+</ul>
+<p>Though most of these services are basically just wrappers around AWS, offering a nicer UI and developer experience while charging more for the convenience.</p>
+<hr>
 <p>The thing is, I had <strong>no idea where to begin</strong>, so I researched for a couple of days about how to self-host.<br>
 Here’s what I concluded:</p>
 <p>Typically, the process involves <strong>port forwarding</strong> and requires a <strong>static IP</strong>.<br>
 Guess what? Most telecom services don’t provide static IPv4 for home consumers since they’re behind CGNAT.<br>
 Even I didn’t know what that actually mean.</p>
 <p>Then I came to know about <strong>web tunnels</strong>, where you can <strong>forward all incoming requests</strong> to a server running on your <strong>localhost</strong>.</p>
+<p>NOTE:Tunnels are okay for deploying demo not recommended for the production in case you have consider amount of traffic on your site</p>
 <p>Everything worked fine, and now I just had to create a process that <strong>always runs in the background on boot</strong> — without any user intervention.<br>
 This is what’s called a <strong>daemon process</strong> in Linux.</p>
 <p><img alt="daemon" loading="lazy" src="https://raw.githubusercontent.com/risvn/blog/refs/heads/main/media/daemon.jpg"></p>
@@ -271,13 +304,18 @@ Here’s what I learned about making a daemon service of your own:</p>
 from this point managing the service process are same as any other daemon process</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>1.sudo systemctl start &lt;service name&gt;      
 </span></span><span style="display:flex;"><span>2.sudo systemctl status &lt;service name&gt;    
-</span></span><span style="display:flex;"><span>3.sudo systemctl enable&lt;service name&gt;      
+</span></span><span style="display:flex;"><span>3.sudo systemctl enable &lt;service name&gt;      
 </span></span></code></pre></div><p>if you got any problem activating service.<br>
 try</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo journalctl -xe
 </span></span></code></pre></div><p>which is also a daemon process which keeps logs of the other daemons.<br>
-Do some research its not that hard it is truly <strong>rewarding</strong> spinning up own servers</p>
+its not that hard it is truly <strong>rewarding</strong> spinning up own servers</p>
 <p>the result are <strong>satisfying</strong> you can check out: <a href="https://album.wannabex.sbs">https://album.wannabex.sbs</a></p>
+<h3 id="topics-im-exploring">Topics I’m Exploring<a hidden class="anchor" aria-hidden="true" href="#topics-im-exploring">#</a></h3>
+<h4 id="1-threads--mutexes"><strong>1. Threads &amp; Mutexes</strong><a hidden class="anchor" aria-hidden="true" href="#1-threads--mutexes">#</a></h4>
+<h4 id="2-load-balancers"><strong>2. Load Balancers</strong><a hidden class="anchor" aria-hidden="true" href="#2-load-balancers">#</a></h4>
+<h4 id="3-containerization"><strong>3. Containerization</strong><a hidden class="anchor" aria-hidden="true" href="#3-containerization">#</a></h4>
+<h4 id="4-socket-programming"><strong>4. Socket Programming</strong><a hidden class="anchor" aria-hidden="true" href="#4-socket-programming">#</a></h4>
 
 
   </div>
